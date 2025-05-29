@@ -1,0 +1,2 @@
+2025-05-29 01:32:05,208 - model_downloader - INFO - Downloading sam_vit_b from https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth
+2025-05-29 01:37:55,797 - model_downloader - INFO - Model saved to models/sam_vit_b.pth
