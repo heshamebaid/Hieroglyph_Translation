@@ -30,8 +30,8 @@ Follow these steps to set up and run the project locally.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/heshamebaid/AI-Powered-Tour-Guide-Platform-for-Ancient-Egyptian-History.git
-cd AI-Powered-Tour-Guide-Platform-for-Ancient-Egyptian-History
+git clone https://github.com/heshamebaid/Hieroglyph_Translation.git
+cd Hieroglyph_Translation
 ```
 
 ### 2. Create a Virtual Environment
