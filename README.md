@@ -1,21 +1,105 @@
-# Hieroglyph Translation API
+# Hieroglyph Translation and AI Chatbot
 
-An advanced API service that translates ancient Egyptian hieroglyphs into meaningful stories using computer vision and AI. The system processes hieroglyph images through a multi-stage pipeline that includes symbol detection, classification, and story generation.
+This project is an integrated, multi-component system for the translation and exploration of ancient Egyptian hieroglyphs. It combines a powerful computer vision API for translating hieroglyphs from images with a sophisticated, context-aware AI chatbot for exploring related historical topics.
 
 ## Features
 
-- 🖼️ **Image Processing**: Advanced edge detection and preprocessing
-- 🎯 **Symbol Detection**: Uses Meta's Segment Anything Model (SAM) for accurate hieroglyph segmentation
-- 🔍 **Symbol Classification**: Classifies hieroglyphs using a trained InceptionV3 model with Gardiner's Sign List
-- 📝 **Story Generation**: Generates culturally accurate translations using advanced LLM (Qwen)
-- 🗃️ **Organized Output**: Structured storage of images, symbols, translations, and JSON results
-- 🔄 **RESTful API**: Easy-to-use FastAPI endpoints
+*   **Hieroglyph Translation**: Upload an image containing hieroglyphs and receive an English translation.
+*   **AI Chatbot**: Engage in a conversation with a Retrieval-Augmented Generation (RAG) chatbot knowledgeable about ancient Egypt.
+*   **Web Interface**: A user-friendly web application built with Django provides a central point of access to both features.
+*   **Microservices Architecture**: The backend logic is split into two independent FastAPI microservices for scalability and maintainability.
 
-## Prerequisites
+## Architecture
 
-- Python 3.8+
-- CUDA-capable GPU (recommended for SAM model)
-- OpenRouter API key for story generation
+The system is built using a microservices architecture:
+
+1.  **Django Frontend**: The main web application that users interact with. It serves the UI and communicates with the backend services.
+2.  **Translation API**: A FastAPI service that uses a deep learning model (InceptionV3) to analyze images and translate hieroglyphic symbols.
+3.  **Chatbot API**: A FastAPI service powered by a RAG system (LangChain, Hugging Face, FAISS) that provides context-aware answers to user queries about ancient Egypt.
+
+## Setup and Installation
+
+Follow these steps to set up and run the project locally.
+
+### Prerequisites
+
+*   Python 3.10 or higher
+*   Git
+*   A Hugging Face account and an API token
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/heshamebaid/AI-Powered-Tour-Guide-Platform-for-Ancient-Egyptian-History.git
+cd AI-Powered-Tour-Guide-Platform-for-Ancient-Egyptian-History
+```
+
+### 2. Create a Virtual Environment
+
+It is highly recommended to use a virtual environment to manage dependencies.
+
+```bash
+# For Windows
+python -m venv venv
+venv\Scripts\activate
+
+# For macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+Install all required packages from the `requirements.txt` file.
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Set Up Environment Variables
+
+The Chatbot API requires a Hugging Face Hub API token to download models. Create a `.env` file in the root directory of the project:
+
+```
+HUGGING_FACE_HUB_TOKEN="your_hugging_face_api_token_here"
+```
+
+## Running the Application
+
+You will need to run the three components (two APIs and the Django server) in **three separate terminals**.
+
+### Terminal 1: Start the Translation API
+
+This service runs on port `8000`.
+
+```bash
+uvicorn api_server:app --host 127.0.0.1 --port 8000
+```
+
+### Terminal 2: Start the Chatbot API
+
+This service runs on port `8001`. Make sure your current directory is the project root.
+
+```bash
+uvicorn chatbot.chatbot_api:app --host 127.0.0.1 --port 8001
+```
+
+### Terminal 3: Run the Django Web Application
+
+Navigate to the `django` directory and run the development server on port `9000` to avoid conflicts.
+
+```bash
+cd django
+python manage.py runserver 9000
+```
+
+### Access the Application
+
+Once all services are running, open your web browser and navigate to:
+
+**http://127.0.0.1:9000/**
+
+You can now use the web interface to translate hieroglyphs and interact with the chatbot.
 
 ## Project Structure
 
@@ -47,32 +131,6 @@ hieroglyph-pipeline/
 ├── logs/                      # Log files
 └── temp_uploads/              # Temporary files
 ```
-
-## Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/your-username/hieroglyph-translation.git
-cd hieroglyph-translation
-```
-
-2. Create and activate a virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# OR
-venv\Scripts\activate     # Windows
-```
-
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-4. Download required model files:
-- Place the SAM model checkpoint (`sam_vit_b.pth`) in `models/`
-- Place the classifier model (`InceptionV3_model.h5`) in `models/`
-- Place Gardiner's List Excel file in `data/`
 
 ## Configuration
 
